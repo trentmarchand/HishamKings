@@ -1,0 +1,13 @@
+{% extends "main/base.html" %}
+{% load materializecss %}
+
+{% block content %}
+<h3>Payment Info</h3>
+
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <input type = "submit">
+</form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <button class="btn" style="background-color:green; color:black" type="submit">Login</button>
+    </form>
+
+
+    If you do not have an account, please <a href="/register"><strong>register</strong></a>.
+{% endblock %}
