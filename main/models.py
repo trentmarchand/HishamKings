@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 import uuid
 import datetime
 
@@ -32,6 +33,11 @@ class Bet(models.Model):
     bet_time = models.DateTimeField(default= datetime.datetime.now(), editable=False)
     bet_note = models.CharField(max_length=200)
     gameID = models.ForeignKey(Game, blank=True, on_delete=models.CASCADE)
+    # userID = models.ForeignKey(
+    #     settings.AUTH_USER_MODEL,
+    #     on_delete=models.CASCADE,
+    #     default= request.user.id
+    # )
 
     #def __str__(self):
     #    return self.bet_note

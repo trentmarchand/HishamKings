@@ -6,7 +6,7 @@ class BetForm(ModelForm):
     #team_selection = forms.ChoiceField(choices=team_selection_choices)
     class Meta:
         model = Bet
-        fields = '__all__'
+        exclude = ['userID']
 
 class AccountForm(ModelForm):
     class Meta:
