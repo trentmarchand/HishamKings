@@ -83,6 +83,9 @@ DATABASES = {
         'PASSWORD': 'FLamp0915085',
         'PORT': 3306,
         'HOST': '127.0.0.1',
+        'OPTIONS': {
+            "init_command": "SET foreign_key_checks = 0;",
+        },
 
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',

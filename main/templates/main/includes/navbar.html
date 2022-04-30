@@ -1,6 +1,10 @@
 <nav>
     <div class="nav-wrapper green">
+        {% if user.is_authenticated %}
         <a href="/homepage" class="brand-logo">HishamKings</a>
+        {% else %}
+        <a href="/login" class="brand-logo">HishamKings</a>
+        {% endif %}
         <ul id="nav-mobile" class="right hide-on-med-and-down">
 
             {% if user.is_authenticated %}

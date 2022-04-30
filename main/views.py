@@ -1,11 +1,11 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Bet, Game
+from .models import Bet, Game, Account
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from .forms import BetForm, AccountForm
+from .forms import BetForm, PaymentForm
 
 
 # Create your views here.
@@ -54,17 +54,17 @@ def sportsbookpage(request):
     form = BetForm()
     return render(request= request,
                   template_name= "main/sportsbook.html",
-                  context= {"form": form})
+                  context= {"form": form, "balance": Account.balance})
 
-def accountpage(request):
+def paymentEntry(request):
     if request.method == "POST":
-        form = AccountForm(request.POST)
+        form = PaymentForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect("main:homepage")
 
 
-    form = AccountForm()
+    form = PaymentForm()
     return render(request= request,
                   template_name= "main/account.html",
                   context= {"form": form})

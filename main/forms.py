@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Bet, Game, Account
+from .models import Bet, Game, PaymentMethod
 #from .models import team_selection_choices
 
 class BetForm(ModelForm):
@@ -8,7 +8,7 @@ class BetForm(ModelForm):
         model = Bet
         exclude = ['userID']
 
-class AccountForm(ModelForm):
+class PaymentForm(ModelForm):
     class Meta:
-        model = Account
+        model = PaymentMethod
         fields = '__all__'

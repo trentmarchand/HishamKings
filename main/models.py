@@ -49,10 +49,19 @@ TITLE_CHOICES = [
 ]
 
 class Account(models.Model):
+    balance = models.DecimalField(decimal_places=2, max_digits=12, default=0.00)
+    userID = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        default=1
+    )
+
+class PaymentMethod(models.Model):
     ccn = models.CharField(max_length=100)
     card_type = models.CharField(max_length=30, choices=TITLE_CHOICES)
     exp_date = models.DateField(default= datetime.date.today())
     cvv = models.IntegerField()
+    accountID = models.ForeignKey(Account, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.ccn
