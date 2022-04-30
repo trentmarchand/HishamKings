@@ -54,7 +54,7 @@ def sportsbookpage(request):
     form = BetForm()
     return render(request= request,
                   template_name= "main/sportsbook.html",
-                  context= {"form": form, "balance": Account.balance})
+                  context= {"form": form, "balance": Account.objects.get(pk=request.user.id).balance})
 
 def paymentEntry(request):
     if request.method == "POST":
