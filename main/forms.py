@@ -11,4 +11,4 @@ class BetForm(ModelForm):
 class PaymentForm(ModelForm):
     class Meta:
         model = PaymentMethod
-        fields = '__all__'
+        exclude = ['userID']

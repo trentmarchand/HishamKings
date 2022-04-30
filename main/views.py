@@ -60,7 +60,10 @@ def paymentEntry(request):
     if request.method == "POST":
         form = PaymentForm(request.POST)
         if form.is_valid():
-            form.save()
+            obj = form.save(commit=False)
+            # add the authenticated user's id to the userID column
+            obj.userID = User.objects.get(pk=request.user.id)
+            obj.save()
             return redirect("main:homepage")
 
 

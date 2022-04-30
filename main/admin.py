@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Bet, Game, PaymentMethod
+from .models import Bet, Game, PaymentMethod, Account
 
 # Register your models here.
 
@@ -21,3 +21,5 @@ admin.site.register(PaymentMethod)
 admin.site.register(Game)
 
 admin.site.register(Bet, BetAdmin)
+
+admin.site.register(Account)
