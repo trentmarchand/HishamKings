@@ -5,7 +5,7 @@ from .models import Bet, Game, Account
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from .forms import BetForm, PaymentForm
+from .forms import BetForm, PaymentForm, SignUpForm
 
 
 # Create your views here.
@@ -20,7 +20,8 @@ def homepage(request):
 def register(request):
     if request.method == "POST":
         # create out of the box user regisitration form
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
+        #form = SignUpFormm
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
