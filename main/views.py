@@ -72,7 +72,7 @@ def add_bet(request):
 
     form = BetForm()
     return render(request=request,
-                  template_name="main/sportsbook.html",
+                  template_name="main/add_bet.html",
                   context={"form": form, "balance": Account.objects.get(pk=request.user.id).balance})
 
 
