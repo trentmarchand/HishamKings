@@ -34,4 +34,38 @@
     <a class="btn btn-primary  btn-sm btn-block green" href="{% url 'main:add_bet' %}">Place Bet</a>
 
 </div>
+<br>
+<div class = "col-md-7">
+    <h5>Your Bets</h5>
+    <hr>
+    <div class = "row">
+        <table>
+            <thead>
+            <tr>
+                <th>Game</th>
+                <th>Team Selection</th>
+                <!--                    <th>Spread</th>-->
+                <th>Amount</th>
+                <th>Time</th>
+                <th>Note</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for b in bets %}
+            <tr>
+                <td>{{b.gameID}}</td>
+                <td>{{b.team_selection}}</td>
+                <!--                    <td>{{b.spread}}</td>-->
+                <td>${{b.bet_amount}}</td>
+                <td>{{b.bet_time}}</td>
+                <td>{{b.bet_note}}</td>
+                <br><br>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
 {% endblock %}

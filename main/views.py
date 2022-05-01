@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.sessions.backends import db
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Bet, Game, Account
@@ -20,14 +21,23 @@ import numpy as np
 # Create your views here.
 
 def homepage(request):
+    #bets = Bet.objects.filter(userID = request.user)
+    bets = Bet.objects.raw("SELECT * FROM main_bet WHERE userID_id = %s", [request.user.id])
+
+    # cursor = db.cursor()
+    # cursor.execute(
+    #     "SELECT * FROM some_table WHERE title LIKE '%?%'",
+    #     [request.GET['q']])
+
     return render(request= request,
                   template_name= "main/home.html",
-                  context= {"games": Game.objects.all()})
+                  context= {"games": Game.objects.raw("SELECT * FROM main_game "), "bets": bets})
 
 # Sportsbook view renders all of the objects in the bet model where the userID is equal to the authenticated user
 def sportsbookpage(request):
 
     bets = Bet.objects.filter(userID = request.user)
+    #bets = Bet.objects.raw("SELECT * FROM main_bets WHERE userID = %s", [request.user])
 
     myFilter = BetFilter(request.GET, queryset=bets)
     bets = myFilter.qs
