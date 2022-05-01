@@ -1,34 +1,41 @@
 {% extends "main/base.html" %}
 
 {% block content %}
-    <div class = "row">
-        <table>
-            <thead>
+    <div class = "col-md-7">
+        <a class="btn btn-primary  btn-sm btn-block blue" href="{% url 'main:sportsbook' %}">Add Bet</a>
+        <h5>Your Bets</h5>
+        <hr>
+        <div class = "row">
+            <table>
+                <thead>
                 <tr>
                     <th>Game</th>
                     <th>Team Selection</th>
-<!--                    <th>Spread</th>-->
+                    <!--                    <th>Spread</th>-->
                     <th>Amount</th>
                     <th>Time</th>
                     <th>Note</th>
-                    <th>UserID</th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
-            {% for b in bets %}
+                <tbody>
+                {% for b in bets %}
                 <tr>
                     <td>{{b.gameID}}</td>
                     <td>{{b.team_selection}}</td>
-<!--                    <td>{{b.spread}}</td>-->
+                    <!--                    <td>{{b.spread}}</td>-->
                     <td>${{b.bet_amount}}</td>
                     <td>{{b.bet_time}}</td>
                     <td>{{b.bet_note}}</td>
-                    <td>{{b.userID}}</td>
+                    <td><a class="btn blue" href="{% url 'main:update_bet' b.id %}">Update</a></td>
+
+                    <td><a class="btn red" href="{% url 'main:delete_bet' b.id %}">Delete</a></td>
                     <br><br>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
     </div>
 {% endblock %}

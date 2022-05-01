@@ -1,0 +1,25 @@
+{% extends "main/base.html" %}
+{% load materializecss %}
+
+{% block content %}
+
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+
+
+            <p>Are you sure you want to delete this bet?</p>
+
+            <form action="{% url 'main:delete_bet' item.id  %}" method="POST">
+
+                {% csrf_token %}
+                <a class="btn blue" href="{% url 'main:homepage' %}">Cancel</a>
+
+                <input class="btn red" type="submit" name="Confirm">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

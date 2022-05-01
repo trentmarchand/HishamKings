@@ -56,6 +56,31 @@ def sportsbookpage(request):
                   template_name= "main/sportsbook.html",
                   context= {"form": form, "balance": Account.objects.get(pk=request.user.id).balance})
 
+def updateBet(request, pk):
+    bet = Bet.objects.get(id=pk)
+    form = BetForm(instance=bet)
+
+    if request.method == 'POST':
+        form = BetForm(request.POST, instance=bet)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            # add the authenticated user's id to the userID column
+            obj.userID = User.objects.get(pk=request.user.id)
+            obj.save()
+            return redirect('main:homepage')
+
+    context = {'form':form, "balance": Account.objects.get(pk=request.user.id).balance}
+    return render(request, 'main/update_bet.html', context)
+
+def deleteBet(request, pk):
+    bet = Bet.objects.get(id=pk)
+    if request.method == "POST":
+        bet.delete()
+        return redirect('main:homepage')
+
+    context = {'item':bet}
+    return render(request, 'main/delete_bet.html', context)
+
 def paymentEntry(request):
     if request.method == "POST":
         form = PaymentForm(request.POST)
@@ -98,3 +123,4 @@ def login_request(request):
     return render(request,
                   "main/login.html",
                   {"form":form})
+

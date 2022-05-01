@@ -30,7 +30,7 @@ class Bet(models.Model):
         default=home
     )
     bet_amount = models.IntegerField()
-    bet_time = models.DateTimeField(default= datetime.datetime.now(), editable=False)
+    bet_time = models.DateTimeField(default= datetime.datetime.now())
     bet_note = models.CharField(max_length=200)
     gameID = models.ForeignKey(Game, blank=True, on_delete=models.CASCADE)
     userID = models.ForeignKey(

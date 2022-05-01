@@ -27,4 +27,7 @@ urlpatterns = [
     path('account/', views.paymentEntry, name='account'),
     path('logout/', views.logout_request, name='logout'),
     path('login/', views.login_request, name='login'),
+    path('update_bet/<str:pk>/', views.updateBet, name='update_bet'),
+    path('delete_bet/<str:pk>/', views.deleteBet, name='delete_bet'),
+
 ]
