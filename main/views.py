@@ -34,7 +34,7 @@ def register(request):
                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
 
 
-    form = UserCreationForm
+    form = SignUpForm
     return render(request,
                   "main/register.html",
                   context= {"form": form})
