@@ -19,8 +19,13 @@ import numpy as np
 
 # Create your views here.
 
-# Homepage view renders all of the objects in the bet model where the userID is equal to the authenticated user
 def homepage(request):
+    return render(request= request,
+                  template_name= "main/home.html",
+                  context= {"games": Game.objects.all()})
+
+# Sportsbook view renders all of the objects in the bet model where the userID is equal to the authenticated user
+def sportsbookpage(request):
 
     bets = Bet.objects.filter(userID = request.user)
 
@@ -28,7 +33,7 @@ def homepage(request):
     bets = myFilter.qs
 
     return render(request= request,
-                  template_name= "main/home.html",
+                  template_name= "main/sportsbook.html",
                   context= {"bets": bets, "myFilter": myFilter})
 
 # Register view creates a post request for the registration form to write data to the database.
@@ -54,7 +59,7 @@ def register(request):
 
 
 # sportsbook view checks authentication, shows the bet form, and saves the bet form
-def sportsbookpage(request):
+def add_bet(request):
     if request.method == "POST":
         if request.user.is_authenticated:
             form = BetForm(request.POST)

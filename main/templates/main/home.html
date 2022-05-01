@@ -1,73 +1,37 @@
 {% extends "main/base.html" %}
 
 {% block content %}
-    <div class="row">
-        <h5>Filter Bets</h5>
-        <hr>
-        <form method="get" class = "col s12">
-            <div class="row">
-                <div class="input-field col s3">
-                    {{myFilter.form.gameID}}
-                    <label>Game</label>
-                </div>
-                <div class="input-field col s3">
-                    <!--                    <i class="material-icons prefix">account_circle</i>-->
-                    <label>Amount</label>
-                    {{myFilter.form.bet_amount}}
-                </div>
-                <div class="input-field col s3">
-                    <!--                    <i class="material-icons prefix">account_circle</i>-->
-                    <label>After Date</label>
-                    {{myFilter.form.equal_date}}
-                </div>
-                <div class="input-field col s3">
-                    <!--                    <i class="material-icons prefix">account_circle</i>-->
-                    <label>Note</label>
-                    {{myFilter.form.note_contains}}
-                </div>
-            </div>
+<div class = "col-md-7">
+    <h5>Available Games</h5>
+    <hr>
 
-            <button class="btn btn-primary blue" type="submit">Search</button>
-        </form>
+    <div class = "row">
+        <table>
+            <thead>
+            <tr>
+                <th>Abbreviation</th>
+                <th>Team 1</th>
+                <!--                    <th>Spread</th>-->
+                <th>Team 2</th>
+                <th>Spread</th>
+            </tr>
+            </thead>
 
-
+            <tbody>
+            {% for g in games %}
+            <tr>
+                <td>{{g.abbreviation}}</td>
+                <td>{{g.team1}}</td>
+                <!--                    <td>{{b.spread}}</td>-->
+                <td>{{g.team2}}</td>
+                <td>{{g.spread}}</td>
+                <br><br>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-    <br>
-    <div class = "col-md-7">
-        <h5>Your Bets</h5>
-        <hr>
-        <a class="btn btn-primary  btn-sm btn-block green" href="{% url 'main:sportsbook' %}">Add Bet</a>
-        <div class = "row">
-            <table>
-                <thead>
-                <tr>
-                    <th>Game</th>
-                    <th>Team Selection</th>
-                    <!--                    <th>Spread</th>-->
-                    <th>Amount</th>
-                    <th>Time</th>
-                    <th>Note</th>
-                </tr>
-                </thead>
+    <a class="btn btn-primary  btn-sm btn-block green" href="{% url 'main:add_bet' %}">Place Bet</a>
 
-                <tbody>
-                {% for b in bets %}
-                <tr>
-                    <td>{{b.gameID}}</td>
-                    <td>{{b.team_selection}}</td>
-                    <!--                    <td>{{b.spread}}</td>-->
-                    <td>${{b.bet_amount}}</td>
-                    <td>{{b.bet_time}}</td>
-                    <td>{{b.bet_note}}</td>
-                    <td><a class="btn blue" href="{% url 'main:update_bet' b.id %}">Update</a></td>
-
-                    <td><a class="btn red" href="{% url 'main:delete_bet' b.id %}">Delete</a></td>
-                    <br><br>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-    </div>
+</div>
 {% endblock %}

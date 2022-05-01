@@ -30,5 +30,5 @@ urlpatterns = [
     path('update_bet/<str:pk>/', views.updateBet, name='update_bet'),
     path('delete_bet/<str:pk>/', views.deleteBet, name='delete_bet'),
     path('analytics/', views.analytics, name='analytics'),
-
+    path('add_bet/', views.add_bet, name='add_bet'),
 ]

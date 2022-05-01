@@ -1,15 +1,73 @@
 {% extends "main/base.html" %}
-{% load materializecss %}
 
 {% block content %}
-    <h3>Add a bet.</h3>
+<div class="row">
+    <h5>Filter Bets</h5>
+    <hr>
+    <form method="get" class = "col s12">
+        <div class="row">
+            <div class="input-field col s3">
+                {{myFilter.form.gameID}}
+                <label>Game</label>
+            </div>
+            <div class="input-field col s3">
+                <!--                    <i class="material-icons prefix">account_circle</i>-->
+                <label>Amount</label>
+                {{myFilter.form.bet_amount}}
+            </div>
+            <div class="input-field col s3">
+                <!--                    <i class="material-icons prefix">account_circle</i>-->
+                <label>After Date</label>
+                {{myFilter.form.equal_date}}
+            </div>
+            <div class="input-field col s3">
+                <!--                    <i class="material-icons prefix">account_circle</i>-->
+                <label>Note Contains</label>
+                {{myFilter.form.note_contains}}
+            </div>
+        </div>
 
-    Available balance: ${{balance}}
-
-    <form action="" method="post">
-        {% csrf_token %}
-        {{form|materializecss}}
-
-        <input type = "submit">
+        <button class="btn btn-primary blue" type="submit">Search</button>
     </form>
+
+
+</div>
+<br>
+<div class = "col-md-7">
+    <h5>Your Bets</h5>
+    <hr>
+    <a class="btn btn-primary  btn-sm btn-block green" href="{% url 'main:add_bet' %}">Add Bet</a>
+    <div class = "row">
+        <table>
+            <thead>
+            <tr>
+                <th>Game</th>
+                <th>Team Selection</th>
+                <!--                    <th>Spread</th>-->
+                <th>Amount</th>
+                <th>Time</th>
+                <th>Note</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for b in bets %}
+            <tr>
+                <td>{{b.gameID}}</td>
+                <td>{{b.team_selection}}</td>
+                <!--                    <td>{{b.spread}}</td>-->
+                <td>${{b.bet_amount}}</td>
+                <td>{{b.bet_time}}</td>
+                <td>{{b.bet_note}}</td>
+                <td><a class="btn blue" href="{% url 'main:update_bet' b.id %}">Update</a></td>
+
+                <td><a class="btn red" href="{% url 'main:delete_bet' b.id %}">Delete</a></td>
+                <br><br>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
 {% endblock %}

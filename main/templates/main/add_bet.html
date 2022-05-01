@@ -1,0 +1,15 @@
+{% extends "main/base.html" %}
+{% load materializecss %}
+
+{% block content %}
+<h3>Add a bet.</h3>
+
+Available balance: ${{balance}}
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{form|materializecss}}
+
+    <input type = "submit">
+</form>
+{% endblock %}
