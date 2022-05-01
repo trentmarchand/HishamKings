@@ -12,7 +12,9 @@ class BetAdmin(admin.ModelAdmin):
     fieldsets = [("Bet Selections", {"fields": ["team_selection", "bet_amount"]}),
                  ("Game", {"fields": ["gameID"]}),
                  ("Bet Info", {"fields": ["bet_time"]}),
-                 ("Additional Info", {"fields": ["bet_note"]})
+                 ("Additional Info", {"fields": ["bet_note"]}),
+                 ("Status", {"fields": ["status"]})
+
     ]
 
 

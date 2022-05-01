@@ -7,6 +7,14 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import BetForm, PaymentForm
 from .filters import BetFilter
+import plotly.express as plt
+import pandas as pd
+from plotly.offline import plot
+from plotly.graph_objs import Scatter
+from plotly.graph_objs import Bar
+import plotly.graph_objs as go
+from io import StringIO
+import numpy as np
 
 
 # Create your views here.
@@ -39,11 +47,11 @@ def register(request):
             for msg in form.error_messages:
                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
 
-
     form = UserCreationForm
     return render(request,
                   "main/register.html",
-                  context= {"form": form})
+                  context={"form": form})
+
 
 # sportsbook view checks authentication, shows the bet form, and saves the bet form
 def sportsbookpage(request):
@@ -57,11 +65,11 @@ def sportsbookpage(request):
                 obj.save()
                 return redirect("main:homepage")
 
-
     form = BetForm()
-    return render(request= request,
-                  template_name= "main/sportsbook.html",
-                  context= {"form": form, "balance": Account.objects.get(pk=request.user.id).balance})
+    return render(request=request,
+                  template_name="main/sportsbook.html",
+                  context={"form": form, "balance": Account.objects.get(pk=request.user.id).balance})
+
 
 def updateBet(request, pk):
     bet = Bet.objects.get(id=pk)
@@ -98,23 +106,24 @@ def paymentEntry(request):
             obj.save()
             return redirect("main:homepage")
 
-
     form = PaymentForm()
-    return render(request= request,
-                  template_name= "main/account.html",
-                  context= {"form": form})
+    return render(request=request,
+                  template_name="main/account.html",
+                  context={"form": form})
+
 
 def logout_request(request):
     logout(request)
     messages.info(request, f"Logged out successfully.")
     return redirect("main:login")
 
+
 def login_request(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username=form.cleaned_data.get('username')
-            password=form.cleaned_data.get('password')
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -129,5 +138,21 @@ def login_request(request):
     form = AuthenticationForm()
     return render(request,
                   "main/login.html",
-                  {"form":form})
+                  {"form": form})
 
+
+def analytics(request):
+    data = []
+    for key in Bet.objects.filter(userID=request.user):
+        data.append(key.team_selection)
+    home = data.count('Home')
+    away = data.count('Away')
+    df = pd.DataFrame({
+        "Team": ["HOME", "Away"],
+        "Amount Bet On": [home, away]
+    })
+    bardata = go.Bar(x=df["Team"], y=df["Amount Bet On"], name='Analytics')
+    titbar = {'title': 'Home vs. Away Stats'}
+    fig = go.Figure(data=bardata, layout=titbar)
+    plot_div = plot(fig, output_type='div')
+    return render(request, "main/analytics.html", context={'plot_div': plot_div})
