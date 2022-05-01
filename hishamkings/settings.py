@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
     'materializecssform',
-    'django_filters'
+    'django_filters',
 ]
 
 MIDDLEWARE = [

@@ -6,15 +6,22 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import BetForm, PaymentForm
+from .filters import BetFilter
 
 
 # Create your views here.
 
 # Homepage view renders all of the objects in the bet model where the userID is equal to the authenticated user
 def homepage(request):
+
+    bets = Bet.objects.filter(userID = request.user)
+
+    myFilter = BetFilter(request.GET, queryset=bets)
+    bets = myFilter.qs
+
     return render(request= request,
                   template_name= "main/home.html",
-                  context= {"bets": Bet.objects.filter(userID = request.user)})
+                  context= {"bets": bets, "myFilter": myFilter})
 
 # Register view creates a post request for the registration form to write data to the database.
 def register(request):
